@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Llistar Categories</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/2.0/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+
+		<div class="navbar">
+        	<div class="navbar-inner">
+            	<div class="container">
+                	<a class="brand" href="#"> <img src="http://www.gencat.cat/img2/temp/escudo_tcm32-28377.gif"></a>
+            	</div>
+       		</div>
+        </div>
+
+        <form class="form-search">
+        	<div class="row-fluid">
+        		<!--<div class="input-append pull-left">
+                    <input type="search" ng-model="query" ng-enter="refreshData()" class="search-query" placeholder="Cerca" tabindex="1">
+                    <button type="submit" class="btn" style="height:30px"><i class="icon-search icon-large"></i></button>              
+                </div>-->
+
+                <!-- E S C O L L I R   E L   N Ú M.   D E   R E G I S T R E S   X   P A N T A L L A -->
+
+	        	<div class="pull-right">
+	        		<label for="pagines">Resultats per pàgina</label>
+                    <select id="pagines" name="pagines" [(ngModel)]="itemsPerPage" (ngModelChange)="refreshData()">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                    </select>
+	        	</div>
+	        </div>
+        </form>
+
+		<table class="table table-striped table-condensed table-hover">
+			
+			<!-- C A P Ç A L E R A -->
+
+			<thead>
+		        <tr>
+		        	<th style="width: 100px;">
+                        <div class="btn-toolbar"><i class="btn icon-plus" (click)="toogleAddMode()"></i></div>
+                    </th>
+		            <th class="id">Id&nbsp;<a (click)="sort_by('id')"><i class="icon-sort"></i></a></th>
+		            <th class="nom">Nom&nbsp;<a (click)="sort_by('nom')"><i class="icon-sort"></i></a></th>
+		            <th class="municipi">Municipi&nbsp;<a (click)="sort_by('municipi')"><i class="icon-sort"></i></a></th>
+		            <th class="comarca">Comarca&nbsp;<a (click)="sort_by('comarca')"><i class="icon-sort"></i></a></th>
+		            <th class="comarca">Categories&nbsp;<a (click)="sort_by('categories')"><i class="icon-sort"></i></a></th>
+		        </tr>
+		    </thead>
+
+		    <tbody>
+
+		    	<!-- C R E A R   N O U S   E Q U I P A M E N T S  -->
+                <!-- O C U L T   X   D E F E C T E -->
+
+		    	<tr [hidden]="!addMode">
+
+		    		<td>
+		    			<div class="btn-toolbar">
+		    				<div class="btn-group">
+		    					<i class="btn icon-save" (click)="add(item)"></i>
+                                <i class="btn icon-remove" (click)="toogleAddMode()"></i>
+		    				</div>
+		    			</div>
+		    		</td>
+
+		    		<td><input [(ngModel)]="item.id" /></td>
+                    <td><input [(ngModel)]="item.nom" /></td>
+                    <td><input [(ngModel)]="item.municipi" /></td>
+                    <td><input [(ngModel)]="item.comarca"/></td>
+                    <td><input [(ngModel)]="item.categories"/></td>
+		    	</tr>
+
+		    	<!-- L L I S T A T   D E   T O T S   E L S   E Q U I P A M E N T S -->
+
+		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}">
+                
+                    <!-- S W I T C H   E N T R E -->
+                    <!-- M O D I F I C A R   E Q U I P A M E N T S -->
+                    <!-- E L I M I N A R   E Q U I P A M E N T S  -->
+                    <!-- I -->
+                    <!-- C O N F I R M A R   L A   M O D I F I C A C I Ó -->
+                    <!-- C A N C E L A R   L A   M O D I F I C A C I Ó-->
+                    
+                    <td>
+
+                        <div class="btn-toolbar" *ngIf="registre.editMode == false || registre.editMode == null">
+                            <div class="btn-group">
+                                <i class="btn icon-edit" (click)="editMode(registre)"></i>
+                                <i class="btn icon-trash" (click)="del(registre)"></i>
+                            </div>
+                        </div>
+
+                        <div class="btn-toolbar" *ngIf="registre.editMode == true">
+                            <div class="btn-group">
+                                <i class="btn icon-save" (click)="update(registre)"></i>
+                                <i class="btn icon-remove" (click)="editMode(registre)"></i>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- I N F O   D E L S   E Q U I P A M E N T S -->
+
+                    <td>
+                        {{registre.id}}
+                    </td>
+
+		    		<td>
+                        <span [hidden]="registre.editMode == true">
+                            {{registre.nom}}
+                        </span>
+
+                        <input [(ngModel)]="registre.nom" [hidden]="registre.editMode == null || registre.editMode == false" />
+                    </td>
+
+                    <td>
+                        <span [hidden]="registre.editMode == true">
+                            {{registre.municipi}}
+                        </span>
+
+                        <input [(ngModel)]="registre.municipi" [hidden]="registre.editMode == null || registre.editMode == false" />
+                    </td>
+
+                    <td>
+                        <span [hidden]="registre.editMode == true">
+                            {{registre.comarca}}
+                        </span>
+
+                        <input [(ngModel)]="registre.comarca" [hidden]="registre.editMode == null || registre.editMode == false" />
+                    </td>
+
+                    <td>
+                        <span [hidden]="registre.editMode == true">
+                            {{registre.categories}}
+                        </span>
+
+                        <input [(ngModel)]="registre.categories" [hidden]="registre.editMode == null || registre.editMode == false" />
+                    </td>
+		    	</tr>		 
+		    </tbody>
+
+		    <tfoot>
+                <td colspan="6">
+                    <pagination-controls
+                        maxSize="5"
+                        (pageChange)="currentPage = $event">
+                    </pagination-controls>
+                    <!-- <pagination 
+                    on-select-page="setPage(page)"
+                    total-items="totalPages"
+                    num-pages="noOfPages"
+                    page="currentPage"
+                    max-size="maxSize"
+                    class="pagination-small"
+                    boundary-links="true"
+                    rotate="false"
+                    previous-text="Anterior"
+                    next-text="Seg&uuml;ent"
+                    first-text="Primer"
+                    last-text="&Uacute;ltim">
+
+                    </pagination> -->
+                </td>
+                <td>
+                    <!-- <input ng-model="currentPage" ng-enter="setPage2()" class="search-query span1"> / {{totalPages/10}} -->
+                </td>
+            </tfoot>
+		</table>
+	</div>
+</body>
+</html>
+<router-outlet></router-outlet>
