@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { RouterModule, Routes } from '@angular/router';
+
 @Injectable()
 export class EquipamentService {
 
@@ -31,7 +33,7 @@ export class EquipamentService {
   		
   		// return this.http.get(this.apiurl + "?query=&page=1&rpp=10"/*, {withCredentials:true}*/);
   		return this.http
-  				   .get(this.apiurl + "?rpp=" + itemsperpage + "&page=1&query=")
+  				   .get(this.apiurl + "?rpp=" + itemsperpage + "&page="+page+query)
   				   .map(res => res.json());
   	}
 
@@ -66,8 +68,13 @@ export class EquipamentService {
 
     // E S B O R R A R   U N   E Q U I P A M E N T
     del(equipament) {
-
+       
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        
+        return this.http.delete(this.apiurl + equipament.id).map(res => res.text());
     }
+
 }
 
 //add: function (equipament) { 

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 //import { Ng2PaginationModule } from 'ng2-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,7 +19,8 @@ import { EquipamentsModule } from './equipaments/equipaments.module';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    EquipamentsModule//,
+    EquipamentsModule,
+    NgxPaginationModule//,
     //Ng2PaginationModule
   ],
   providers: [],

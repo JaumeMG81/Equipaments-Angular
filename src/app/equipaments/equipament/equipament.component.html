@@ -16,13 +16,15 @@
             	</div>
        		</div>
         </div>
-
+        <script type="text/javascript">
+                var sortingOrder = 'id';
+            </script>
         <form class="form-search">
         	<div class="row-fluid">
-        		<!--<div class="input-append pull-left">
-                    <input type="search" ng-model="query" ng-enter="refreshData()" class="search-query" placeholder="Cerca" tabindex="1">
-                    <button type="submit" class="btn" style="height:30px"><i class="icon-search icon-large"></i></button>              
-                </div>-->
+        		<div class="input-append pull-left">
+                    <input type="search" [(ngModel)]="query" class="search-query" placeholder="Cerca" tabindex="1" name="query">
+                    <button type="submit" class="btn" style="height:30px"  (click)="refreshData()"><i class="icon-search icon-large"></i></button>              
+                </div>
 
                 <!-- E S C O L L I R   E L   N Ú M.   D E   R E G I S T R E S   X   P A N T A L L A -->
 
@@ -49,10 +51,14 @@
                         <div class="btn-toolbar"><i class="btn icon-plus" (click)="toogleAddMode()"></i></div>
                     </th>
 		            <th class="id">Id&nbsp;<a (click)="sort_by('id')"><i class="icon-sort"></i></a></th>
-		            <th class="nom">Nom&nbsp;<a (click)="sort_by('nom')"><i class="icon-sort"></i></a></th>
+                    
+                    
+		            <th class="nom">Nom&nbsp;<a (click)="sortType('nom')" [class.active]="sortBy==='name'"><i class="icon-sort"></i></a></th>
+                    
+                    
 		            <th class="municipi">Municipi&nbsp;<a (click)="sort_by('municipi')"><i class="icon-sort"></i></a></th>
-		            <th class="comarca">Comarca&nbsp;<a (click)="sort_by('comarca')"><i class="icon-sort"></i></a></th>
-		            <th class="comarca">Categories&nbsp;<a (click)="sort_by('categories')"><i class="icon-sort"></i></a></th>
+		            <!--<th class="comarca">Comarca&nbsp;<a (click)="sort_by('comarca')"><i class="icon-sort"></i></a></th>
+		            <th class="comarca">Categories&nbsp;<a (click)="sort_by('categories')"><i class="icon-sort"></i></a></th>-->
 		        </tr>
 		    </thead>
 
@@ -75,13 +81,16 @@
 		    		<td><input [(ngModel)]="item.id" /></td>
                     <td><input [(ngModel)]="item.nom" /></td>
                     <td><input [(ngModel)]="item.municipi" /></td>
-                    <td><input [(ngModel)]="item.comarca"/></td>
-                    <td><input [(ngModel)]="item.categories"/></td>
+                    <!--<td><input [(ngModel)]="item.comarca"/></td>
+                    <td><input [(ngModel)]="item.categories"/></td>-->
 		    	</tr>
 
 		    	<!-- L L I S T A T   D E   T O T S   E L S   E Q U I P A M E N T S -->
 
-		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}">
+		    	<tr *ngFor="let registre of pagedItems | paginate: {
+              itemsPerPage: itemsPerPage,
+              currentPage: currentPage,
+              totalItems: itemsPerPage * numPages }">
                 
                     <!-- S W I T C H   E N T R E -->
                     <!-- M O D I F I C A R   E Q U I P A M E N T S -->
@@ -129,7 +138,7 @@
                         <input [(ngModel)]="registre.municipi" [hidden]="registre.editMode == null || registre.editMode == false" />
                     </td>
 
-                    <td>
+                   <!-- <td>
                         <span [hidden]="registre.editMode == true">
                             {{registre.comarca}}
                         </span>
@@ -143,15 +152,19 @@
                         </span>
 
                         <input [(ngModel)]="registre.categories" [hidden]="registre.editMode == null || registre.editMode == false" />
-                    </td>
+                    </td>-->
 		    	</tr>		 
 		    </tbody>
-
+            Suzu is there
 		    <tfoot>
                 <td colspan="6">
-                    <pagination-controls
-                        maxSize="5"
-                        (pageChange)="currentPage = $event">
+                    
+                        <pagination-controls
+                        (pageChange)="canvi($event)"
+                        num-pages="noOfPages" page="currentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" previous-text="Anterior" next-text="Seg&uuml;ent" first-text="Primer" last-text="&Uacute;ltim">
+                        
+                         
+  
                     </pagination-controls>
                     <!-- <pagination 
                     on-select-page="setPage(page)"
@@ -170,8 +183,8 @@
                     </pagination> -->
                 </td>
                 <td>
-                    <!-- <input ng-model="currentPage" ng-enter="setPage2()" class="search-query span1"> / {{totalPages/10}} -->
-                </td>
+                     <input [(ngModel)]="currentPage" (click)="setPage2()"  (change)="setPage2()" class="search-query span1"> / {{itemsPerPage * numPages/10}}
+                </td>   
             </tfoot>
 		</table>
 	</div>
