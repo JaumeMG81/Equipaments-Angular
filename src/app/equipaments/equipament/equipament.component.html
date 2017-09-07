@@ -19,10 +19,13 @@
 
         <form class="form-search">
         	<div class="row-fluid">
-        		<!--<div class="input-append pull-left">
-                    <input type="search" ng-model="query" ng-enter="refreshData()" class="search-query" placeholder="Cerca" tabindex="1">
-                    <button type="submit" class="btn" style="height:30px"><i class="icon-search icon-large"></i></button>              
-                </div>-->
+        		
+                <!-- I N T R O D U I R   P A R A U L A   X   C E R C A R -->
+
+                <div class="input-append pull-left">
+                    <input type="search" id="cerca" name="cerca" [(ngModel)]="query" class="search-query" placeholder="Cerca" tabindex="1">
+                    <button (click)="refreshData()" type="submit" class="btn" style="height:30px"><i class="icon-search icon-large"></i></button>              
+                </div>
 
                 <!-- E S C O L L I R   E L   N Ú M.   D E   R E G I S T R E S   X   P A N T A L L A -->
 
@@ -81,10 +84,11 @@
 
 		    	<!-- L L I S T A T   D E   T O T S   E L S   E Q U I P A M E N T S -->
 
-		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage}">
+		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: itemsPerPage*numPages} | ordre">
+                <!-- <tr *ngFor="let registre of ('pagedItems' | ordre)"> -->
                 
                     <!-- S W I T C H   E N T R E -->
-                    <!-- M O D I F I C A R   E Q U I P A M E N T S -->
+                    <!-- E D I T A R   E Q U I P A M E N T S -->
                     <!-- E L I M I N A R   E Q U I P A M E N T S  -->
                     <!-- I -->
                     <!-- C O N F I R M A R   L A   M O D I F I C A C I Ó -->
@@ -149,10 +153,17 @@
 
 		    <tfoot>
                 <td colspan="6">
+
                     <pagination-controls
-                        maxSize="5"
-                        (pageChange)="currentPage = $event">
+                        (pageChange)="canvi($event)"
+                        [maxSize] = maxSize
+                        [autoHide] = true
+                        [directionLinks] = true
+                        previousLabel = "Anterior"
+                        nextLabel = "Següent">
                     </pagination-controls>
+                    <!-- (pageChange)="currentPage = $event" -->
+                    <!-- (pageChange)="pageChanged($event)" -->
                     <!-- <pagination 
                     on-select-page="setPage(page)"
                     total-items="totalPages"
@@ -170,7 +181,7 @@
                     </pagination> -->
                 </td>
                 <td>
-                    <!-- <input ng-model="currentPage" ng-enter="setPage2()" class="search-query span1"> / {{totalPages/10}} -->
+                    <input [(ngModel)]="currentPage" (change)="setPage2()" (click)="setPage2()" class="search-query span1"> / {{itemsPerPage*numPages/10}}
                 </td>
             </tfoot>
 		</table>
