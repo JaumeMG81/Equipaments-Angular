@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { Ng2PaginationModule } from 'ng2-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { EquipamentsRoutingModule } from './equipaments-routing.module';
 import { EquipamentComponent } from './equipament/equipament.component';
@@ -16,13 +17,16 @@ import { ReadCategoriaComponent } from './categoria/read-categoria/read-categori
 import { UpdateCategoriaComponent } from './categoria/update-categoria/update-categoria.component';
 import { DeleteCategoriaComponent } from './categoria/delete-categoria/delete-categoria.component';
 
+import { Ordre } from './equipament/equipament.component';
+
 @NgModule({
   imports: [
     CommonModule,
     EquipamentsRoutingModule,
     FormsModule,
-    Ng2PaginationModule
+    NgxPaginationModule
+    // Ng2PaginationModule
   ],
-  declarations: [EquipamentComponent, CategoriaComponent, CreateEquipamentComponent, ReadEquipamentComponent, UpdateEquipamentComponent, DeleteEquipamentComponent, CreateCategoriaComponent, ReadCategoriaComponent, UpdateCategoriaComponent, DeleteCategoriaComponent]
+  declarations: [Ordre, EquipamentComponent, CategoriaComponent, CreateEquipamentComponent, ReadEquipamentComponent, UpdateEquipamentComponent, DeleteEquipamentComponent, CreateCategoriaComponent, ReadCategoriaComponent, UpdateCategoriaComponent, DeleteCategoriaComponent]
 })
 export class EquipamentsModule { }
