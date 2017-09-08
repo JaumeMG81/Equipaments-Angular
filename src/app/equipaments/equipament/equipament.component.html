@@ -12,27 +12,24 @@
 		<div class="navbar">
         	<div class="navbar-inner">
             	<div class="container">
-                	<a class="brand" href="#"> <img src="http://www.gencat.cat/img2/temp/escudo_tcm32-28377.gif"></a>
+                	<a class="brand" href="http://localhost:4200/app-equipament"> <img src="http://www.gencat.cat/img2/temp/escudo_tcm32-28377.gif"></a>
             	</div>
        		</div>
         </div>
         <script type="text/javascript">
                 var sortingOrder = 'id';
             </script>
+        <div ng-controller="ctrlRead">
         <form class="form-search">
         	<div class="row-fluid">
-<<<<<<< HEAD
-        		<div class="input-append pull-left">
-                    <input type="search" [(ngModel)]="query" class="search-query" placeholder="Cerca" tabindex="1" name="query">
-                    <button type="submit" class="btn" style="height:30px"  (click)="refreshData()"><i class="icon-search icon-large"></i></button>              
-=======
+
         		
                 <!-- I N T R O D U I R   P A R A U L A   X   C E R C A R -->
 
                 <div class="input-append pull-left">
                     <input type="search" id="cerca" name="cerca" [(ngModel)]="query" class="search-query" placeholder="Cerca" tabindex="1">
                     <button (click)="refreshData()" type="submit" class="btn" style="height:30px"><i class="icon-search icon-large"></i></button>              
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+
                 </div>
 
                 <!-- E S C O L L I R   E L   N Ú M.   D E   R E G I S T R E S   X   P A N T A L L A -->
@@ -62,7 +59,7 @@
 		            <th class="id">Id&nbsp;<a (click)="sort_by('id')"><i class="icon-sort"></i></a></th>
                     
                     
-		            <th class="nom">Nom&nbsp;<a (click)="sortType('nom')" [class.active]="sortBy==='name'"><i class="icon-sort"></i></a></th>
+		            <th class="nom">Nom&nbsp;<a (click)="sort_by('nom')"><i class="icon-sort"></i></a></th>
                     
                     
 		            <th class="municipi">Municipi&nbsp;<a (click)="sort_by('municipi')"><i class="icon-sort"></i></a></th>
@@ -96,15 +93,10 @@
 
 		    	<!-- L L I S T A T   D E   T O T S   E L S   E Q U I P A M E N T S -->
 
-<<<<<<< HEAD
-		    	<tr *ngFor="let registre of pagedItems | paginate: {
-              itemsPerPage: itemsPerPage,
-              currentPage: currentPage,
-              totalItems: itemsPerPage * numPages }">
-=======
+
 		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: itemsPerPage*numPages} | ordre">
                 <!-- <tr *ngFor="let registre of ('pagedItems' | ordre)"> -->
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+
                 
                     <!-- S W I T C H   E N T R E -->
                     <!-- E D I T A R   E Q U I P A M E N T S -->
@@ -171,16 +163,8 @@
 		    </tbody>
             Suzu is there
 		    <tfoot>
-                <td colspan="6">
-<<<<<<< HEAD
-                    
-                        <pagination-controls
-                        (pageChange)="canvi($event)"
-                        num-pages="noOfPages" page="currentPage" max-size="maxSize" class="pagination-small" boundary-links="true" rotate="false" previous-text="Anterior" next-text="Seg&uuml;ent" first-text="Primer" last-text="&Uacute;ltim">
-                        
-                         
-  
-=======
+                <td colspan="6 ">
+
 
                     <pagination-controls
                         (pageChange)="canvi($event)"
@@ -188,8 +172,10 @@
                         [autoHide] = true
                         [directionLinks] = true
                         previousLabel = "Anterior"
-                        nextLabel = "Següent">
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+                        nextLabel = "Següent"
+                        firstText="Primer" 
+                        lastText="&Uacute;ltim">
+
                     </pagination-controls>
                     <!-- (pageChange)="currentPage = $event" -->
                     <!-- (pageChange)="pageChanged($event)" -->
@@ -209,17 +195,14 @@
 
                     </pagination> -->
                 </td>
+                
                 <td>
-<<<<<<< HEAD
-                     <input [(ngModel)]="currentPage" (click)="setPage2()"  (change)="setPage2()" class="search-query span1"> / {{itemsPerPage * numPages/10}}
-                </td>   
-=======
                     <input [(ngModel)]="currentPage" (change)="setPage2()" (click)="setPage2()" class="search-query span1"> / {{itemsPerPage*numPages/10}}
                 </td>
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
             </tfoot>
 		</table>
 	</div>
+    </div>
 </body>
 </html>
 <router-outlet></router-outlet>

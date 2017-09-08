@@ -9,13 +9,13 @@ export class Ordre implements PipeTransform{
 
   transform(array: Array<any>, key: string): Array<string> {
     
-    key = key ? key : "id";
+    //key = key ? key : "id";
 
     array.sort(function(a,b){
       
       switch(key){
         case 'id': if(a.id > b.id) return 1; if(a.id < b.id) return -1; return 0;
-        case 'comarca': if(a.comarca > b.comarca) return 1; if(a.comarca < b.comarca) return -1; return 0;
+        case 'nom': if(a.nom > b.nom) return 1; if(a.nom < b.nom) return -1; return 0;
         case 'municipi': if(a.municipi > b.municipi) return 1; if(a.municipi < b.municipi) return -1; return 0;
       }
     });
@@ -41,16 +41,11 @@ $scope.sort_by = function(newSortingOrder) {
   providers: [ EquipamentService, Ordre ]
 })
 export class EquipamentComponent implements OnInit {
-<<<<<<< HEAD
-    
-	sortingOrder: String = 'municipi';
-	reverse: boolean = false;
-=======
 
   sortingOrder: String = 'id';
   reverse: boolean = false;
 
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+
 	filteredItems = [];
 	itemsPerPage: number = 10;
 	maxSize: number = 9;
@@ -58,12 +53,9 @@ export class EquipamentComponent implements OnInit {
 	currentPage: number = 1;
 	addMode: boolean = false;
 	query: String = "";
-<<<<<<< HEAD
-    numPages = [];
-    newSortingOrder = this.sortingOrder;
-=======
+
   numPages: number = 1;
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+
 
 	item = {};
 	items;
@@ -121,26 +113,6 @@ sortByNom (c1: ){
   				data =>  {
   					this.items = data.equipaments;
   					this.pagedItems = this.items;
-<<<<<<< HEAD
-                    this.numPages = data.pages;
-                    //console.log("num de pagines: " + parseInt(data.pages));
-  				}
-  			);
-  	}
-    canvi(pagina){
-        this.currentPage = pagina;
-        this.refreshData();
-    }
-    // switch del formulari afegir equipament
-  	toogleAddMode() {
-  		this.addMode = !this.addMode;
-  	}
-
-    // switch del formulari modificar equipament
-    editMode(equipament) {
-      equipament.editMode = !equipament.editMode;
-    }
-=======
             this.numPages = data.pages;
             
             //console.log("pagines: " + data.pages);
@@ -149,7 +121,7 @@ sortByNom (c1: ){
   				}
   			);
   	}
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+
 
     // crear un equipament
   	add(equipament) {
@@ -162,20 +134,7 @@ sortByNom (c1: ){
       this.equipamentService.update(equipament).subscribe();
     }
 
-<<<<<<< HEAD
-    del(equipament) {
-      this.equipamentService.del(equipament).subscribe();
-        
-    }
 
-    setPage2 = function () {
-            if(isNaN(this.currentPage)){
-                this.currentPage = 1
-                return;
-            } 
-            this.refreshData();
-        }; 
-=======
     errorServer;
     errorBuit;
     finished;
@@ -258,5 +217,5 @@ sortByNom (c1: ){
         } 
         this.refreshData();
     }; 
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
+
 }

@@ -21,11 +21,7 @@ export class EquipamentService {
   		query = query ? "&filter=" + query : "";
 
   		return this.http
-<<<<<<< HEAD
-  				   .get(this.apiurl + "?rpp=" + itemsperpage + "&page="+page+query)
-=======
   				   .get(this.apiurl + "?rpp=" + itemsperpage + "&page=" + page + query)
->>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
   				   .map(res => res.json());
   	}
 
@@ -49,8 +45,7 @@ export class EquipamentService {
 
     // E S B O R R A R   U N   E Q U I P A M E N T
     del(equipament) {
-<<<<<<< HEAD
-       
+
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         
@@ -79,4 +74,4 @@ crearProfe(id, nom, cognoms, dni, curs, naixement) {
                  .map(res => res.text());
 >>>>>>> cf0955a76041cb90213d62c56e9c51c7aca3281f
     }
-}
+}*/
