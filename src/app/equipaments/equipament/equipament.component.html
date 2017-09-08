@@ -95,8 +95,11 @@
 
 
 		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: itemsPerPage*numPages} | ordre">
+<<<<<<< HEAD
                 <!-- <tr *ngFor="let registre of ('pagedItems' | ordre)"> -->
 
+=======
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
                 
                     <!-- S W I T C H   E N T R E -->
                     <!-- E D I T A R   E Q U I P A M E N T S -->
@@ -106,7 +109,6 @@
                     <!-- C A N C E L A R   L A   M O D I F I C A C I Ó-->
                     
                     <td>
-
                         <div class="btn-toolbar" *ngIf="registre.editMode == false || registre.editMode == null">
                             <div class="btn-group">
                                 <i class="btn icon-edit" (click)="editMode(registre)"></i>
@@ -129,11 +131,11 @@
                     </td>
 
 		    		<td>
-                        <span [hidden]="registre.editMode == true">
+                        <span *ngIf="registre.editMode == false || registre.editMode == null">
                             {{registre.nom}}
                         </span>
 
-                        <input [(ngModel)]="registre.nom" [hidden]="registre.editMode == null || registre.editMode == false" />
+                        <input [(ngModel)]="registre.nom" *ngIf="registre.editMode == true" />
                     </td>
 
                     <td>
@@ -173,27 +175,14 @@
                         [directionLinks] = true
                         previousLabel = "Anterior"
                         nextLabel = "Següent"
+<<<<<<< HEAD
                         firstText="Primer" 
                         lastText="&Uacute;ltim">
 
+=======
+                        class="">
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
                     </pagination-controls>
-                    <!-- (pageChange)="currentPage = $event" -->
-                    <!-- (pageChange)="pageChanged($event)" -->
-                    <!-- <pagination 
-                    on-select-page="setPage(page)"
-                    total-items="totalPages"
-                    num-pages="noOfPages"
-                    page="currentPage"
-                    max-size="maxSize"
-                    class="pagination-small"
-                    boundary-links="true"
-                    rotate="false"
-                    previous-text="Anterior"
-                    next-text="Seg&uuml;ent"
-                    first-text="Primer"
-                    last-text="&Uacute;ltim">
-
-                    </pagination> -->
                 </td>
                 
                 <td>

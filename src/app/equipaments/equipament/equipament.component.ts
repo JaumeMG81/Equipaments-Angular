@@ -1,37 +1,53 @@
 import { Component, OnInit, ChangeDetectionStrategy, Pipe, PipeTransform } from '@angular/core';
 import { EquipamentService } from './equipament.service';
-//import { PaginationInstance } from 'ngx-pagination';
 
 @Pipe({
   name: 'ordre'
 })
 export class Ordre implements PipeTransform{
 
+  sortingOrder: String;
+
   transform(array: Array<any>, key: string): Array<string> {
+<<<<<<< HEAD
     
     //key = key ? key : "id";
+=======
 
-    array.sort(function(a,b){
+    key = key ? key : "id";
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
+
+    // hem de girar l'array
+    if(key == this.sortingOrder)
+      array.reverse();
+
+    // hem de reordenar l'array segons la clau
+    else {
+      this.sortingOrder = key;
       
+<<<<<<< HEAD
       switch(key){
         case 'id': if(a.id > b.id) return 1; if(a.id < b.id) return -1; return 0;
         case 'nom': if(a.nom > b.nom) return 1; if(a.nom < b.nom) return -1; return 0;
         case 'municipi': if(a.municipi > b.municipi) return 1; if(a.municipi < b.municipi) return -1; return 0;
       }
     });
+=======
+      array.sort(function(a,b){
+        switch(key){
+          case 'id': if(a.id > b.id) return 1; if(a.id < b.id) return -1; return 0;
+          case 'nom': if(a.nom > b.nom) return 1; if(a.nom < b.nom) return -1; return 0;
+          case 'comarca': if(a.comarca > b.comarca) return 1; if(a.comarca < b.comarca) return -1; return 0;
+          case 'municipi': if(a.municipi > b.municipi) return 1; if(a.municipi < b.municipi) return -1; return 0;
+          case 'categories': if(a.categories > b.categories) return 1; if(a.categories < b.categories) return -1; return 0;
+        }
+      });
+    }
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
 
     return array;
   }
 }
-
-/*
-$scope.sort_by = function(newSortingOrder) { 
-        if ($scope.sortingOrder == newSortingOrder) 
-            $scope.reverse = !$scope.reverse; 
-  
-        $scope.sortingOrder = newSortingOrder; 
-    }; 
-*/
 
 @Component({
   selector: 'app-equipament',
@@ -42,13 +58,16 @@ $scope.sort_by = function(newSortingOrder) {
 })
 export class EquipamentComponent implements OnInit {
 
+<<<<<<< HEAD
   sortingOrder: String = 'id';
   reverse: boolean = false;
 
 
+=======
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
 	filteredItems = [];
 	itemsPerPage: number = 10;
-	maxSize: number = 9;
+	maxSize: number = 7;
 	pagedItems = [];
 	currentPage: number = 1;
 	addMode: boolean = false;
@@ -63,8 +82,12 @@ export class EquipamentComponent implements OnInit {
 	constructor(private equipamentService: EquipamentService, private ordre: Ordre) { }
 
   	ngOnInit() {
+<<<<<<< HEAD
   		var sortingOrder = sortingOrder;
 	    var reverse = false;
+=======
+
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
 	    var filteredItems = [];
 	    var itemsPerPage = 10;
 	    var maxSize = 9;
@@ -107,7 +130,6 @@ sortByNom (c1: ){
 }
 */
   	refreshData(){
-      // console.log("query: " + this.query);
   		this.equipamentService.getAll(this.query, this.currentPage, this.itemsPerPage)
   			.subscribe(
   				data =>  {
@@ -115,9 +137,9 @@ sortByNom (c1: ){
   					this.pagedItems = this.items;
             this.numPages = data.pages;
             
-            //console.log("pagines: " + data.pages);
-            console.log("items: " + JSON.stringify(this.items));
-            //console.log("pagedItems" + JSON.stringify(this.pagedItems));
+            // console.log("pagines: " + data.pages);
+            // console.log("items: " + JSON.stringify(this.items));
+            // console.log("pagedItems" + JSON.stringify(this.pagedItems));
   				}
   			);
   	}
@@ -134,64 +156,24 @@ sortByNom (c1: ){
       this.equipamentService.update(equipament).subscribe();
     }
 
+<<<<<<< HEAD
 
     errorServer;
     errorBuit;
     finished;
 
+=======
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
     // esborrar un equipament
     del(equipament) {
       this.equipamentService
           .del(equipament)
-          .catch((error: any) => {
-            console.log("hi ha hagut algun error" + error);
-            
-               if (error.status === 0 || error.status === "0") {
-                    console.log("Servidor Aturat"); 
-                    this.errorServer = true;
-               }
-                else if (error.status === 400 || error.status === "400")
-               {
-                   console.log("falten dades o són incorrectes"); 
-                   this.errorBuit = true;
-               }
-                else if (error.status === 500 || error.status === "500")
-               {
-                   console.log("Error genèric - no troba les dades a la BD");
-                   this.errorBuit = true;
-               }
-                else if (error.status === 503 || error.status === "503")
-               {
-                   console.log("Error de servidor");
-                   this.errorServer = true;
-               }
-                else {
-                    this.finished = true 
-                   return error.json();
-               }
-        })
-          .subscribe(
-            error => {},
-            () => {this.finished = true; console.log("tot ha anat bé")}
-          );
-          this.finished = false;
-        this.errorBuit=false;
-        this.errorServer=false;
+          .subscribe();
     }
 
     sort_by(nouOrdre) {
       this.ordre.transform(this.pagedItems, nouOrdre);
     }
-
-    /*
-    // change sorting order 
-    $scope.sort_by = function(newSortingOrder) { 
-        if ($scope.sortingOrder == newSortingOrder) 
-            $scope.reverse = !$scope.reverse; 
-  
-        $scope.sortingOrder = newSortingOrder; 
-    }; 
-    */
 
     canvi(number: number) {
         console.log(number);
@@ -217,5 +199,9 @@ sortByNom (c1: ){
         } 
         this.refreshData();
     }; 
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
