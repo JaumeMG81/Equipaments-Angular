@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Pipe, PipeTransform } from '@angular/core';
 import { EquipamentService } from './equipament.service';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Pipe({
   name: 'ordre'
@@ -8,16 +10,20 @@ export class Ordre implements PipeTransform{
 
   sortingOrder: String;
 
-  transform(array: Array<any>, key: string): Array<string> {
+  transform(array: Array<any>, key: string, flag: boolean): Array<string> {
 
     key = key ? key : "id";
+    flag = flag ? flag : false;
 
     // hem de girar l'array
-    if(key == this.sortingOrder)
+    if(key == this.sortingOrder && flag == true) {
       array.reverse();
+      console.log("1- key: " + key + ", sortingOrder: " + this.sortingOrder + ", flag: " + flag);
+    }
 
     // hem de reordenar l'array segons la clau
     else {
+      console.log("2- key: " + key + ", sortingOrder: " + this.sortingOrder + ", flag: " + flag);
       this.sortingOrder = key;
       
       array.sort(function(a,b){
@@ -40,7 +46,7 @@ export class Ordre implements PipeTransform{
   templateUrl: './equipament.component.html',
   styleUrls: ['./equipament.component.css'],
   changeDetection: ChangeDetectionStrategy.Default,
-  providers: [ EquipamentService, Ordre ]
+  providers: [ EquipamentService, Ordre, Location ]
 })
 export class EquipamentComponent implements OnInit {
 
@@ -52,11 +58,23 @@ export class EquipamentComponent implements OnInit {
 	addMode: boolean = false;
 	query: String = "";
   numPages: number = 1;
+  flag: boolean = true;
+
+  location: Location;
+  route: string;
 
 	item = {};
 	items;
 
-	constructor(private equipamentService: EquipamentService, private ordre: Ordre) { }
+	constructor(private equipamentService: EquipamentService, private ordre: Ordre, location: Location, router: Router) {
+    router.events.subscribe((val) => {
+      if(location.path() != '')
+        this.route = location.path();
+      else
+        this.route = 'Home';
+      this.location = location;
+    });
+  }
 
   	ngOnInit() {
 
@@ -68,6 +86,16 @@ export class EquipamentComponent implements OnInit {
 	    var query = "";
 	    var pagedItems = [];
 
+      console.log(this.route);
+      console.log(this.location.path());
+
+      /*
+      $scope.query = ($location.search()).query ? ($location.search()).query : "";
+    var page = ($location.search()).page;
+    var rpp = ($location.search()).rpp;
+    $scope.currentPage = isNaN(page) || page<1 ? 1 : page;
+    $scope.itemsPerPage = isNaN(rpp) || rpp<10 ? 10 : rpp;*/
+
 	    this.refreshData();
   	}
 
@@ -75,9 +103,13 @@ export class EquipamentComponent implements OnInit {
   		this.equipamentService.getAll(this.query, this.currentPage, this.itemsPerPage)
   			.subscribe(
   				data =>  {
+            
   					this.items = data.equipaments;
   					this.pagedItems = this.items;
+
             this.numPages = data.pages;
+
+            this.location.replaceState("app-equipament", 'rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
             
             // console.log("pagines: " + data.pages);
             // console.log("items: " + JSON.stringify(this.items));
@@ -89,6 +121,10 @@ export class EquipamentComponent implements OnInit {
     // crear un equipament
   	add(equipament) {
       this.equipamentService.add(equipament).subscribe();
+
+      window.location.replace('http://localhost:4200/app-equipament/?rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
+      //this.refreshData();
+      //window.location.reload();
   	}
 
     // modificar un equipament
@@ -102,10 +138,16 @@ export class EquipamentComponent implements OnInit {
       this.equipamentService
           .del(equipament)
           .subscribe();
+
+      //this.location.go('app-equipament?rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
+      //window.location.replace('http://localhost:4200/app-equipament/?rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
+
+      this.refreshData();
+      //window.location.reload();
     }
 
     sort_by(nouOrdre) {
-      this.ordre.transform(this.pagedItems, nouOrdre);
+      this.ordre.transform(this.pagedItems, nouOrdre, this.flag);
     }
 
     canvi(number: number) {
