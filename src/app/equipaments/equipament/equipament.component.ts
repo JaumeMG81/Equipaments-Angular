@@ -16,9 +16,17 @@ export class Ordre implements PipeTransform{
     key = key ? key : "id";
     flag = flag ? flag : false;
 
+       if(key == this.sortingOrder && flag == true) {
+      array.reverse();
+      console.log("1- key: " + key + ", sortingOrder: " + this.sortingOrder + ", flag: " + flag);
+    }
+
+    // hem de reordenar l'array segons la clau
+    else {
+      console.log("2- key: " + key + ", sortingOrder: " + this.sortingOrder + ", flag: " + flag);
+        this.sortingOrder = key;
+    }
     // hem de girar l'array
-<<<<<<< HEAD
-    
     // hem de reordenar l'array segons la clau
    /* else {
 =======
@@ -46,12 +54,13 @@ export class Ordre implements PipeTransform{
         }
       });
     //}
+      /*
   if(key == this.sortingOrder){
      array.reverse();
     }
       else{
     this.sortingOrder = key;
-      }
+      }*/
     return array;
   }
 }
@@ -104,11 +113,7 @@ export class EquipamentComponent implements OnInit {
 	    var addMode = false;
 	    var query = "";
 	    var pagedItems = [];
-<<<<<<< HEAD
-        var numPages = [];
-        
-        
-=======
+
 
       console.log(this.route);
       console.log(this.location.path());
@@ -120,7 +125,7 @@ export class EquipamentComponent implements OnInit {
     $scope.currentPage = isNaN(page) || page<1 ? 1 : page;
     $scope.itemsPerPage = isNaN(rpp) || rpp<10 ? 10 : rpp;*/
 
->>>>>>> 78c8c0b75013719a48a0c1a5a63f62ef3cc158a9
+
 	    this.refreshData();
   	}
 /*
@@ -157,14 +162,10 @@ sortByNom (c1: ){
             
   					this.items = data.equipaments;
   					this.pagedItems = this.items;
-<<<<<<< HEAD
-                    this.numPages = data.pages;
-=======
 
             this.numPages = data.pages;
 
             this.location.replaceState("app-equipament", 'rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
->>>>>>> 78c8c0b75013719a48a0c1a5a63f62ef3cc158a9
             
             // console.log("pagines: " + data.pages);
             // console.log("items: " + JSON.stringify(this.items));
@@ -175,14 +176,10 @@ sortByNom (c1: ){
     // crear un equipament
   	add(equipament) {
       this.equipamentService.add(equipament).subscribe();
-<<<<<<< HEAD
-        window.location.reload();
-=======
 
       window.location.replace('http://localhost:4200/app-equipament/?rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
       //this.refreshData();
       //window.location.reload();
->>>>>>> 78c8c0b75013719a48a0c1a5a63f62ef3cc158a9
   	}
 
     // modificar un equipament
@@ -197,16 +194,14 @@ sortByNom (c1: ){
       this.equipamentService
           .del(equipament)
           .subscribe();
-<<<<<<< HEAD
-         window.location.reload();
-=======
+
 
       //this.location.go('app-equipament?rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
       //window.location.replace('http://localhost:4200/app-equipament/?rpp=' + this.itemsPerPage + '&page=' + this.currentPage + '&query=' + this.query);
 
       this.refreshData();
       //window.location.reload();
->>>>>>> 78c8c0b75013719a48a0c1a5a63f62ef3cc158a9
+
     }
 
     sort_by(nouOrdre) {
