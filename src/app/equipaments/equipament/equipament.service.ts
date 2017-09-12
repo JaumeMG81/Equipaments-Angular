@@ -29,12 +29,15 @@ export class EquipamentService {
     add(equipament) {
       let headers = new Headers({ 'Content-Type': 'application/json' });
       let options = new RequestOptions({ headers: headers });
-
       return this.http
                  .post(this.apiurl, JSON.stringify(equipament), options)
                  .map(res => res.json());
-    }
-
+        
+   
+    }/*
+refresh(): void {
+    window.location.reload();
+}*/
     // M O D I F I C A R   U N   E Q U I P A M E N T
     update(equipament) {
       let headers = new Headers();

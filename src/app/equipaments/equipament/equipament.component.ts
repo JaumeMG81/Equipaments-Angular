@@ -9,30 +9,19 @@ export class Ordre implements PipeTransform{
   sortingOrder: String;
 
   transform(array: Array<any>, key: string): Array<string> {
-<<<<<<< HEAD
-    
-    //key = key ? key : "id";
-=======
+
 
     key = key ? key : "id";
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
 
     // hem de girar l'array
-    if(key == this.sortingOrder)
-      array.reverse();
-
+    
     // hem de reordenar l'array segons la clau
-    else {
+   /* else {
       this.sortingOrder = key;
-      
-<<<<<<< HEAD
-      switch(key){
-        case 'id': if(a.id > b.id) return 1; if(a.id < b.id) return -1; return 0;
-        case 'nom': if(a.nom > b.nom) return 1; if(a.nom < b.nom) return -1; return 0;
-        case 'municipi': if(a.municipi > b.municipi) return 1; if(a.municipi < b.municipi) return -1; return 0;
-      }
-    });
-=======
+      console.log("2");
+        console.log(key);
+        console.log(this.sortingOrder);
+*/
       array.sort(function(a,b){
         switch(key){
           case 'id': if(a.id > b.id) return 1; if(a.id < b.id) return -1; return 0;
@@ -42,9 +31,13 @@ export class Ordre implements PipeTransform{
           case 'categories': if(a.categories > b.categories) return 1; if(a.categories < b.categories) return -1; return 0;
         }
       });
+    //}
+  if(key == this.sortingOrder){
+     array.reverse();
     }
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
-
+      else{
+    this.sortingOrder = key;
+      }
     return array;
   }
 }
@@ -58,13 +51,7 @@ export class Ordre implements PipeTransform{
 })
 export class EquipamentComponent implements OnInit {
 
-<<<<<<< HEAD
-  sortingOrder: String = 'id';
-  reverse: boolean = false;
 
-
-=======
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
 	filteredItems = [];
 	itemsPerPage: number = 10;
 	maxSize: number = 7;
@@ -82,12 +69,8 @@ export class EquipamentComponent implements OnInit {
 	constructor(private equipamentService: EquipamentService, private ordre: Ordre) { }
 
   	ngOnInit() {
-<<<<<<< HEAD
-  		var sortingOrder = sortingOrder;
-	    var reverse = false;
-=======
 
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
+
 	    var filteredItems = [];
 	    var itemsPerPage = 10;
 	    var maxSize = 9;
@@ -97,8 +80,6 @@ export class EquipamentComponent implements OnInit {
 	    var pagedItems = [];
         var numPages = [];
         
-        var sortNom:string;
-        var newSortingOrder = sortingOrder;
         
 	    this.refreshData();
   	}
@@ -135,7 +116,7 @@ sortByNom (c1: ){
   				data =>  {
   					this.items = data.equipaments;
   					this.pagedItems = this.items;
-            this.numPages = data.pages;
+                    this.numPages = data.pages;
             
             // console.log("pagines: " + data.pages);
             // console.log("items: " + JSON.stringify(this.items));
@@ -143,11 +124,10 @@ sortByNom (c1: ){
   				}
   			);
   	}
-
-
     // crear un equipament
   	add(equipament) {
       this.equipamentService.add(equipament).subscribe();
+        window.location.reload();
   	}
 
     // modificar un equipament
@@ -156,19 +136,13 @@ sortByNom (c1: ){
       this.equipamentService.update(equipament).subscribe();
     }
 
-<<<<<<< HEAD
 
-    errorServer;
-    errorBuit;
-    finished;
-
-=======
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
     // esborrar un equipament
     del(equipament) {
       this.equipamentService
           .del(equipament)
           .subscribe();
+         window.location.reload();
     }
 
     sort_by(nouOrdre) {
@@ -199,9 +173,6 @@ sortByNom (c1: ){
         } 
         this.refreshData();
     }; 
-<<<<<<< HEAD
 
 }
-=======
-}
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
+

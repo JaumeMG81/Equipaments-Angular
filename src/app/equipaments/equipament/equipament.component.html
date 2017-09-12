@@ -12,7 +12,7 @@
 		<div class="navbar">
         	<div class="navbar-inner">
             	<div class="container">
-                	<a class="brand" href="http://localhost:4200/app-equipament"> <img src="http://www.gencat.cat/img2/temp/escudo_tcm32-28377.gif"></a>
+                	<a class="brand"> <img src="http://www.gencat.cat/img2/temp/escudo_tcm32-28377.gif"></a>
             	</div>
        		</div>
         </div>
@@ -95,11 +95,8 @@
 
 
 		    	<tr *ngFor="let registre of pagedItems | paginate: {itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: itemsPerPage*numPages} | ordre">
-<<<<<<< HEAD
-                <!-- <tr *ngFor="let registre of ('pagedItems' | ordre)"> -->
 
-=======
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
+
                 
                     <!-- S W I T C H   E N T R E -->
                     <!-- E D I T A R   E Q U I P A M E N T S -->
@@ -112,7 +109,7 @@
                         <div class="btn-toolbar" *ngIf="registre.editMode == false || registre.editMode == null">
                             <div class="btn-group">
                                 <i class="btn icon-edit" (click)="editMode(registre)"></i>
-                                <i class="btn icon-trash" (click)="del(registre)"></i>
+                                <i class="btn icon-trash" (click)="del(registre)" ></i>
                             </div>
                         </div>
 
@@ -163,26 +160,19 @@
                     </td>-->
 		    	</tr>		 
 		    </tbody>
-            Suzu is there
 		    <tfoot>
-                <td colspan="6 ">
+                <td colspan="6">
 
-
+                <ul class="pagination justify-content-center">
                     <pagination-controls
                         (pageChange)="canvi($event)"
                         [maxSize] = maxSize
                         [autoHide] = true
                         [directionLinks] = true
                         previousLabel = "Anterior"
-                        nextLabel = "Següent"
-<<<<<<< HEAD
-                        firstText="Primer" 
-                        lastText="&Uacute;ltim">
-
-=======
-                        class="">
->>>>>>> d670018a56752d2f056479b06b24e2e7ad4c82b2
+                        nextLabel = "Següent">
                     </pagination-controls>
+                    </ul>
                 </td>
                 
                 <td>
